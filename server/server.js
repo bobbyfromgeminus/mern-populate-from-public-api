@@ -18,7 +18,14 @@ app.use(cors());
 
 app.get("/api/cats/", async (req, res) => {
   const cats = await CatModel.find().sort({ created: "desc" });
-  return res.json(cats);
+  const prettyJson = JSON.stringify(cats, null, 2);
+  res.type('json').send(prettyJson);
+});
+
+app.get("/api/cats/egypt", async (req, res) => {
+  const cats = await CatModel.find({ origin: 'Egypt' }).sort({ created: "desc" });
+  const prettyJson = JSON.stringify(cats, null, 2);
+  res.type('json').send(prettyJson);
 });
 
 app.get("/api/cats/:id", async (req, res) => {

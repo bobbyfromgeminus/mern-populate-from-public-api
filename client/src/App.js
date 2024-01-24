@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import './App.css';
 
+
 function App() {
 
   const [cats, setCats] = useState([]);
@@ -52,6 +53,14 @@ function App() {
 
   return (
     <>
+      <nav>
+        nav
+      </nav>
+
+      <aside>
+        lorem ipsum
+      </aside>
+
       <header>
         <input type="text" placeholder='search a cat' onChange={searchByName}/>
       </header>

@@ -33,6 +33,18 @@ app.get("/api/cats/:id", async (req, res) => {
   return res.json(cat);
 });
 
+app.get('/api/cats/searchbyname/:searchString', async (req, res) => {
+  const { searchString } = req.params;
+  try {
+    const matchingCats = await CatModel.find({ name: { $regex: searchString, $options: 'i' } }).sort({ created: 'desc' });
+    const prettyJson = JSON.stringify(matchingCats, null, 2);
+    res.type('json').send(prettyJson);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Hiba történt a lekérdezés során.' });
+  }
+});
+
 app.post("/api/cats/", async (req, res, next) => {
   const cat = req.body;
 
@@ -68,6 +80,7 @@ app.delete("/api/cats/:id", async (req, res, next) => {
 });
 
 const main = async () => {
+  mongoose.set('strictQuery', false);
   await mongoose.connect(MONGO_URL);
 
   app.listen(PORT, () => {

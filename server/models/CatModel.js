@@ -42,7 +42,7 @@ const CatSchema = new mongoose.Schema({
   short_legs: Number,
   wikipedia_url: String,
   hypoallergenic: Number,
-  reference_image_id: String,
+  img_url: String,
   created: {
     type: Date,
     default: Date.now,

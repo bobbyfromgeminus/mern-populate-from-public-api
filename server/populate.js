@@ -11,10 +11,7 @@ if (!mongoUrl) {
 }
 
 const getCatsFromTheCatApi = async () => {
-  const page = 0;
-  const limit = 100;
   const apiKey = 'live_jC1FRqSELdAoKWrPfNqd4ZgQuN89yYGOYYO1Yyin3RB0idQ4kgLOTWtAwVfHKxiz';
-  //const apiUrl = `https://api.thecatapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=ASC&page=${page}&limit=${limit}`;
   const apiUrl = `https://api.thecatapi.com/v1/breeds`;
   const headers = new Headers({
     "Content-Type": "application/json",
@@ -39,15 +36,7 @@ const getCatsFromTheCatApi = async () => {
 const populateCats = async () => {
   await CatModel.deleteMany({});
   const breeds = await getCatsFromTheCatApi();
-  const catPromises = breeds.map( async (item) => {
-    const iresponse = await fetch('https://api.thecatapi.com/v1/images/search?breed_ids='+item.id, {
-      "Content-Type": "application/json",
-      "x-api-key": "live_jC1FRqSELdAoKWrPfNqd4ZgQuN89yYGOYYO1Yyin3RB0idQ4kgLOTWtAwVfHKxiz"
-    });
-    const iresult = await iresponse.json();
-    let imgUrl = '';
-    if (iresult && iresult[0]) imgUrl = iresult[0].url;
-    return ({
+  const cats = breeds.map( (item) => ({
       id: item.id,
       name: item.name,
       weight_imperial: item.weight.imperial,
@@ -85,11 +74,9 @@ const populateCats = async () => {
       short_legs: item.short_legs,
       wikipedia_url: item.wikipedia_url,
       hypoallergenic: item.hypoallergenic,
-      img_url: imgUrl,
-    });
-  });
-
-  const cats = await Promise.all(catPromises);
+      img_url: item.image ? item.image.url : ''
+    })
+  );
 
   await CatModel.create(...cats);
   console.log("Cats created");

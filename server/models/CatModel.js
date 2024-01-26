@@ -2,7 +2,6 @@ import mongoose from 'mongoose';
 
 const CatSchema = new mongoose.Schema({
   id: String,
-  url: String,
   width: Number,
   height: Number,
   weight_imperial: String,

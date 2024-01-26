@@ -1,86 +1,131 @@
-import { useState, useEffect } from 'react';
-import './App.css';
-
+import "./App.css";
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import CatListComponent from "./components/CatListComponent";
+import AllCatsComponent from "./components/AllCatsComponent";
+import LapFriendlyCatsComponent from "./components/LapFriendlyCatsComponent";
+import CreateCatComponent from "./components/CreateCatComponent";
+import EditCatComponent from "./components/EditCatComponent";
 
 function App() {
-
   const [cats, setCats] = useState([]);
-  const [searchString, setSearchString] = useState('');
+  const [nameSearch, setNameSearch] = useState("");
+  const [fetchCounter, setFetchCounter] = useState(0);
+  const [selectedCat, setSelectedCat] = useState({});
+  const apiUrl = "http://localhost:8080/api/cats";
 
-  //const apiUrl = '/api/cats';
-  const apiUrl = 'http://localhost:8080/api/cats';
+  const searchFromName = (e) => {
+    setNameSearch(e.target.value);
+  };
 
-  // paraméterezhető fetch segédfüggvény
-  const fetchData = async (url, reqMethod, urlExt = '', data = null) => {
-    const fetchUrl = url + urlExt;
-    const options = {
-      method: reqMethod,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: data ? JSON.stringify(data) : null
-    };
+  const deleteCat = async (id) => {
     try {
-      const response = await fetch(fetchUrl, options);
+      const response = await fetch(`${apiUrl}/${id}`, {
+        method: "DELETE",
+      });
       const result = await response.json();
-      return result;
+      if (result) setFetchCounter(fetchCounter + 1);
     } catch (error) {
-      console.error('Error:', error.message);
+      console.error("Error:", error.message);
     }
-  }
+  };
+
+  const createCat = async (cat) => {
+    try {
+      const response = await fetch(apiUrl, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cat),
+      });
+      const result = await response.json();
+      if (result) {
+        setFetchCounter(fetchCounter + 1);
+      }
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  };
+
+  const editCat = async (cat) => {
+    try {
+      const response = await fetch(`${apiUrl}/${cat._id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(cat),
+      });
+
+      const result = await response.json();
+      if (result) setFetchCounter(fetchCounter + 1);
+    } catch (error) {
+      console.error("Error:", error.message);
+    }
+  };
 
   useEffect(() => {
-      const getCats = async () => {
-        try {
-          let urlExt = '';
-          searchString==='' ? urlExt='' : urlExt='/searchbyname/'+searchString;
-          const catResp = await fetchData(apiUrl+urlExt, 'GET')
-          setCats(catResp);
-
-        } catch (error) {
-          console.error('Hiba történt:', error);
-        }
-      };
-    
-      getCats();
-  }, [searchString]);
-
-
-  const searchByName = (e) => {
-    setSearchString(e.target.value);
-  }
-
+    const getCats = async () => {
+      let apiUrl = "http://localhost:8080/api/cats";
+      if (nameSearch) {
+        apiUrl = `http://localhost:8080/api/cats/searchbydesc/${nameSearch}`;
+      }
+      try {
+        const response = await fetch(apiUrl);
+        const result = await response.json();
+        setCats(result);
+      } catch (error) {
+        console.error("Error:", error.message);
+      }
+    };
+    getCats();
+  }, [nameSearch, fetchCounter]);
 
   return (
-    <>
-      <nav>
-        nav
-      </nav>
-
-      <aside>
-        lorem ipsum
-      </aside>
-
-      <header>
-        <input type="text" placeholder='search a cat' onChange={searchByName}/>
-      </header>
-      
+    <Router>
       <div className="App">
-        {
-          cats.map((cat, index) => (
-            <div className="card" key={index} id={cat._id}>
-                <div className='card-image' style={{ backgroundImage: `url(${cat.img_url})` }}></div>
-                <div className='card-content'>
-                  <h2>{cat.name}</h2>
-                  <h3>origin: {cat.origin}</h3>
-                  <p>{cat.description}</p>
-                </div>
-            </div>
-          ))
-        }
+        <nav>
+          <Link to="/">List of Cats</Link>
+          <Link to="/createcat">Create a New Cat</Link>
+          <Link to="/allcats">Show all cats</Link>
+          <Link to="/lapfriendly">Show lap friendly cats only</Link>
+        </nav>
 
+        <main>
+          <Routes>
+
+            // Cat Table
+            <Route  path="/" 
+                    exact
+                    element={ <CatListComponent cats={cats} 
+                                                setSelectedCat={setSelectedCat}
+                                                searchFromName={searchFromName} 
+                                                createCat={createCat} editCat={editCat} deleteCat={deleteCat}/> } />
+
+            // Cat cards - All Cats
+            <Route  path="/allcats"
+                    element={ <AllCatsComponent cats={cats} 
+                                                searchFromName={searchFromName}/> } />
+                                                
+            // Cat cards - Lap Friendly Cats
+            <Route  path="/lapfriendly" 
+                    element={<LapFriendlyCatsComponent />} />
+
+            // Create New Cat
+            <Route  path="/createcat" 
+                    element={<CreateCatComponent createCat={createCat} />} />
+
+            // Edit a Cat
+            <Route  path="/editcat/:id" 
+                    element={<EditCatComponent  editCat={editCat}
+                                                selectedCat={selectedCat} />} />
+
+          </Routes>
+        </main>
       </div>
-    </>
+    </Router>
   );
 }
 

@@ -2,9 +2,15 @@ import React from 'react';
 
 const AllCatsComponent = (props) => {
 
+    const filterHandler = (e) => {
+        props.setSearchString(e.target.value);
+    }
+
     return (
         <>
-        <input placeholder="search" className="filter" type="text" name="namefilter" onChange={props.searchFromName} />
+        <input placeholder="search" className="filter" type="text" name="filter" onChange={filterHandler} />
+        <button className="button" type="button" onClick={ ()=>props.setFilterTarget('name') }>Filter by Name</button>
+        <button className="button" type="button" onClick={ ()=>props.setFilterTarget('desc') }>Filter by Desc</button>
         <h1>Lap Friendly Cats</h1>
         <div className="flexbox">
             {props.cats.map((cat, index) => (

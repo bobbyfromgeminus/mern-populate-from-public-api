@@ -33,7 +33,7 @@ app.get("/api/cats/:id", async (req, res) => {
   return res.json(cat);
 });
 
-app.get('/api/cats/searchbyname/:searchString', async (req, res) => {
+app.get('/api/cats/findbyname/:searchString', async (req, res) => {
   const { searchString } = req.params;
   try {
     const matchingCats = await CatModel.find({ name: { $regex: searchString, $options: 'i' } }).sort({ created: 'desc' });
@@ -45,7 +45,7 @@ app.get('/api/cats/searchbyname/:searchString', async (req, res) => {
   }
 });
 
-app.get('/api/cats/searchbydesc/:searchString', async (req, res) => {
+app.get('/api/cats/findbydesc/:searchString', async (req, res) => {
   const { searchString } = req.params;
   try {
     const matchingCats = await CatModel.find({ description: { $regex: searchString, $options: 'i' } }).sort({ created: 'desc' });

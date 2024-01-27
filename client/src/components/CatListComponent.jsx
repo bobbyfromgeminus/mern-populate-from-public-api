@@ -3,12 +3,18 @@ import {  Link  } from "react-router-dom";
 
 const CatListComponent = (props) => {
 
+    const filterHandler = (e) => {
+        props.setSearchString(e.target.value);
+    }
+
     return (
         <table>
             <thead>
                 <tr>
                     <th colSpan="6">
-                        <input placeholder="search" className="filter" type="text" name="namefilter" onChange={props.searchFromName} />
+                        <input placeholder="search" className="filter" type="text" name="filter" onChange={filterHandler} />
+                        <button className="button" type="button" onClick={ ()=>props.setFilterTarget('name') }>Filter by Name</button>
+                        <button className="button" type="button" onClick={ ()=>props.setFilterTarget('desc') }>Filter by Desc</button>
                     </th>
                 </tr>
                 <tr>

@@ -10,22 +10,30 @@ import EditCatComponent from "./components/EditCatComponent";
 
 function App() {
   const [cats, setCats] = useState([]);
-  const [nameSearch, setNameSearch] = useState("");
-  const [fetchCounter, setFetchCounter] = useState(0);
+  const [searchString, setSearchString] = useState('');
+  const [filterTarget, setFilterTarget] = useState('name');
+  const [fetchTrigger, setFetchTrigger] = useState(0);
   const [selectedCat, setSelectedCat] = useState({});
-  const apiUrl = "http://localhost:8080/api/cats";
 
-  const searchFromName = (e) => {
-    setNameSearch(e.target.value);
-  };
+  const apiUrls = {
+    simple:     function() {
+                  return `http://localhost:8080/api/cats`;
+                },
+    findByName: function(searchString) {
+                  return `http://localhost:8080/api/cats/findbyname/${searchString}`;
+                },
+    findByDesc: function(searchString) {
+                  return `http://localhost:8080/api/cats/findbydesc/${searchString}`;
+                }
+  }
 
   const deleteCat = async (id) => {
     try {
-      const response = await fetch(`${apiUrl}/${id}`, {
+      const response = await fetch(`${apiUrls.simple()}/${id}`, {
         method: "DELETE",
       });
       const result = await response.json();
-      if (result) setFetchCounter(fetchCounter + 1);
+      if (result) setFetchTrigger(fetchTrigger + 1);
     } catch (error) {
       console.error("Error:", error.message);
     }
@@ -33,7 +41,7 @@ function App() {
 
   const createCat = async (cat) => {
     try {
-      const response = await fetch(apiUrl, {
+      const response = await fetch(apiUrls.simple(), {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,7 +50,7 @@ function App() {
       });
       const result = await response.json();
       if (result) {
-        setFetchCounter(fetchCounter + 1);
+        setFetchTrigger(fetchTrigger + 1);
       }
     } catch (error) {
       console.error("Error:", error.message);
@@ -51,7 +59,7 @@ function App() {
 
   const editCat = async (cat) => {
     try {
-      const response = await fetch(`${apiUrl}/${cat._id}`, {
+      const response = await fetch(`${apiUrls.simple()}/${cat._id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -60,7 +68,7 @@ function App() {
       });
 
       const result = await response.json();
-      if (result) setFetchCounter(fetchCounter + 1);
+      if (result) setFetchTrigger(fetchTrigger + 1);
     } catch (error) {
       console.error("Error:", error.message);
     }
@@ -68,9 +76,10 @@ function App() {
 
   useEffect(() => {
     const getCats = async () => {
-      let apiUrl = "http://localhost:8080/api/cats";
-      if (nameSearch) {
-        apiUrl = `http://localhost:8080/api/cats/searchbydesc/${nameSearch}`;
+      let apiUrl = apiUrls.simple();
+      if (searchString) {
+        if (filterTarget==='name') apiUrl = apiUrls.findByName(searchString);
+        else if (filterTarget==='desc') apiUrl = apiUrls.findByDesc(searchString);
       }
       try {
         const response = await fetch(apiUrl);
@@ -81,7 +90,7 @@ function App() {
       }
     };
     getCats();
-  }, [nameSearch, fetchCounter]);
+  }, [apiUrls, filterTarget, searchString, fetchTrigger]);
 
   return (
     <Router>
@@ -101,13 +110,17 @@ function App() {
                     exact
                     element={ <CatListComponent cats={cats} 
                                                 setSelectedCat={setSelectedCat}
-                                                searchFromName={searchFromName} 
-                                                createCat={createCat} editCat={editCat} deleteCat={deleteCat}/> } />
+                                                setSearchString={setSearchString} 
+                                                setFilterTarget={setFilterTarget}
+                                                createCat={createCat} 
+                                                editCat={editCat} 
+                                                deleteCat={deleteCat}/> } />
 
             // Cat cards - All Cats
             <Route  path="/allcats"
                     element={ <AllCatsComponent cats={cats} 
-                                                searchFromName={searchFromName}/> } />
+                                                setSearchString={setSearchString} 
+                                                setFilterTarget={setFilterTarget} /> } />
                                                 
             // Cat cards - Lap Friendly Cats
             <Route  path="/lapfriendly" 

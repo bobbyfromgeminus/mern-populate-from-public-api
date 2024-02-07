@@ -6,12 +6,15 @@ import reportWebVitals from './reportWebVitals';
 
 import Layout from "./Pages/Layout";
 import ErrorPage from "./Pages/ErrorPage";
+import CatGallery from "./Pages/CatGallery";
+import CatDatasheet from "./Pages/CatDatasheet";
 import CatList from "./Pages/CatList";
 import CatCreator from "./Pages/CatCreator";
 import CatEditor from "./Pages/CatEditor";
-import CatGallery from "./Pages/CatGallery";
-import CatDatasheet from "./Pages/CatDatasheet";
 import Breeders from "./Pages/Breeders";
+import BreederList from './Pages/BreederList';
+import BreederCreator from './Pages/BreederCreator';
+import BreederEditor from './Pages/BreederEditor';
 
 
 const router = createBrowserRouter([
@@ -25,16 +28,16 @@ const router = createBrowserRouter([
         element: <CatGallery />,
       },
       {
+        path: "/catdatasheet/:id",
+        element: <CatDatasheet />,
+      },
+      {
         path: "/catlist",
         element: <CatList />,
       },
       {
         path: "/catcreator",
         element: <CatCreator />,
-      },
-      {
-        path: "/catdatasheet/:id",
-        element: <CatDatasheet />,
       },
       {
         path: "/cateditor/:id",
@@ -44,7 +47,18 @@ const router = createBrowserRouter([
         path: "/breeders",
         element: <Breeders />,
       },
-      
+      {
+        path: "/breederlist",
+        element: <BreederList />,
+      },
+      {
+        path: "/breedercreator",
+        element: <BreederCreator />,
+      },
+      {
+        path: "/breedereditor/:id",
+        element: <BreederEditor />,
+      },
     ],
   },
 ]);

@@ -1,7 +1,7 @@
 import React from 'react';
 import {  Link  } from "react-router-dom";
 
-const CatTableComponent = (props) => {
+const BreederTableComponent = (props) => {
 
     const filterHandler = (e) => {
         props.setSearchString(e.target.value);
@@ -10,42 +10,40 @@ const CatTableComponent = (props) => {
     return (
         <section>
             <main>
-            <h1>Breeds of Cats</h1>
+            <h1>Breeders</h1>
             <table>
                 <thead>
                     <tr>
                         <th colSpan="6">
                             <div className="filtergroup">
-                                <label htmlFor="filter">filter breeds</label>
+                                <label htmlFor="filter">filter breeders</label>
                                 <button className="filterbutton" type="button" onClick={ ()=>props.setFilterTarget('name') }>by Name</button>
-                                <button className="filterbutton" type="button" onClick={ ()=>props.setFilterTarget('desc') }>by Desc</button>
+                                <button className="filterbutton" type="button" onClick={ ()=>props.setFilterTarget('country') }>by Country</button>
                                 <input placeholder="type something" className="filter" type="text" name="filter" onChange={filterHandler} />
                             </div>
                         </th>
                     </tr>
                     <tr>
-                        <th>image</th>
                         <th>name</th>
-                        <th>origin</th>
-                        <th>lap friendly</th>
-                        <th>description</th>
+                        <th>address</th>
+                        <th>phone</th>
+                        <th>email</th>
+                        <th>web</th>
                         <th>controllers</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {props.cats.map((cat, index) => (
-                        <tr key={index} id={cat._id}>
-                            <td>
-                                <div style={{backgroundImage: `url("${cat.img_url}")` }}></div>
-                            </td>
-                            <td>{cat.name}</td>
-                            <td>{cat.origin}</td>
-                            <td>{cat.lap}</td>
-                            <td>{cat.description}</td>
+                    {props.breeders.map((breeder, index) => (
+                        <tr key={index} id={breeder._id}>
+                            <td>{breeder.name}</td>
+                            <td>{breeder.address}</td>
+                            <td>{breeder.phone}</td>
+                            <td>{breeder.email}</td>
+                            <td>{breeder.web}</td>
                             <td>
                                 <div>
-                                    <Link className="button" to={`/cateditor/${cat._id}`}>Edit</Link>
-                                    <button className="button" type="button" onClick={ () => props.deleteCat(cat._id) }>Delete</button>
+                                    <Link className="button" to={`/breedereditor/${breeder._id}`}>Edit</Link>
+                                    <button className="button" type="button" onClick={ () => props.deleteBreeder(breeder._id) }>Delete</button>
                                 </div>
                             </td>
                         </tr>
@@ -57,4 +55,4 @@ const CatTableComponent = (props) => {
     );
 };
 
-export default CatTableComponent;
+export default BreederTableComponent;

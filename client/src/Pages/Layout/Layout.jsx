@@ -23,8 +23,8 @@ const Layout = () => (
         <h2>Editor</h2>
         <Link to="/catlist"><i className="fas fa-list"></i> List of Breeds</Link>
         <Link to="/catcreator"><i className="fas fa-plus-circle"></i> Create a New Breed</Link>
-        <Link to="/catlist"><i className="fas fa-list"></i> List of Breeders</Link>
-        <Link to="/catcreator"><i className="fas fa-plus-circle"></i> Create a New Breeder</Link>
+        <Link to="/breederlist"><i className="fas fa-list"></i> List of Breeders</Link>
+        <Link to="/breedercreator"><i className="fas fa-plus-circle"></i> Create a New Breeder</Link>
       </div>
     </div>
 

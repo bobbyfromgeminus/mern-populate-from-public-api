@@ -7,12 +7,23 @@ const AllCatsComponent = (props) => {
         props.setSearchString(e.target.value);
     }
 
+    const changeTarget = (target) => {
+        props.setFilterTarget(target);
+        if (target === 'name') {
+            document.getElementById(`filtername`).classList.add('active');
+            document.getElementById(`filterdesc`).classList.remove('active');
+        } else {
+            document.getElementById(`filterdesc`).classList.add('active');
+            document.getElementById(`filtername`).classList.remove('active');
+        }
+    }
+
     return (
         <section>
             <div className="filtergroup">
                 <label htmlFor="filter">filter breeds</label>
-                <button className="filterbutton" type="button" onClick={ ()=>props.setFilterTarget('name') }>by Name</button>
-                <button className="filterbutton" type="button" onClick={ ()=>props.setFilterTarget('desc') }>by Desc</button>
+                <button id="filtername" className="filterbutton active" type="button" onClick={ ()=>changeTarget('name') }>by Name</button>
+                <button id="filterdesc" className="filterbutton" type="button" onClick={ ()=>changeTarget('desc') }>by Desc</button>
                 <input placeholder="type something" className="filter" type="text" name="filter" onChange={filterHandler} />
             </div>
 
@@ -24,7 +35,6 @@ const AllCatsComponent = (props) => {
                         <div className="flip-card-back">
                             <h2>{cat.name}</h2>
                             <h3>from {cat.origin}</h3>
-                            <h4>lap friendly: {cat.lap}</h4>
                             <p>{cat.description}</p>
                         </div>
                         </div>

@@ -1,10 +1,7 @@
 import React from "react";
-import { useParams } from 'react-router-dom';
 import {  Link  } from "react-router-dom";
 
 const EditCatComponent = (props) => {
-
-    const { id } = useParams();
 
     const getValue = (id) => {
         return (document.getElementById(id).value);
@@ -12,11 +9,11 @@ const EditCatComponent = (props) => {
 
     const updateCat = () =>{
         const updatedCat = {
-            _id: id,
+            _id: getValue('_id'),
             name: getValue('name'),
             origin: getValue('origin'),
             description: getValue('description'),
-            reference_image_id: getValue('reference_image_id'),
+            img_url: getValue('img_url'),
             life_span: getValue('life_span'),
             lap: getValue('lap'),
             indoor: getValue('indoor'),
@@ -27,7 +24,12 @@ const EditCatComponent = (props) => {
 
     return (
         <>
-        <p>Editing cat with ID: {id}</p>
+        <p>Editing cat with ID: {props.selectedCat._id}</p>
+
+        <div className="formgroup">
+            <label htmlFor="_id">_id:</label>
+            <input type="text" name="_id" id="_id" defaultValue={props.selectedCat._id}/>
+        </div>
 
         <div className="formgroup">
             <label htmlFor="name">name:</label>
@@ -45,8 +47,8 @@ const EditCatComponent = (props) => {
         </div>
 
         <div className="formgroup">
-            <label htmlFor="reference_image_id">image url:</label>
-            <input type="text" name="reference_image_id" id="reference_image_id" defaultValue={props.selectedCat.reference_image_id}/>
+            <label htmlFor="img_url">image url:</label>
+            <input type="text" name="img_url" id="img_url" defaultValue={props.selectedCat.img_url}/>
         </div>
 
         <div className="formgroup">

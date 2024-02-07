@@ -12,7 +12,7 @@ const CreateCatComponent = (props) => {
             name: getValue('name'),
             origin: getValue('origin'),
             description: getValue('description'),
-            reference_image_id: getValue('reference_image_id'),
+            img_url: getValue('img_url'),
             life_span: getValue('life_span'),
             lap: getValue('lap'),
             indoor: getValue('indoor'),
@@ -39,8 +39,8 @@ const CreateCatComponent = (props) => {
         </div>
 
         <div className="formgroup">
-            <label htmlFor="reference_image_id">image url:</label>
-            <input type="text" name="reference_image_id" id="reference_image_id" />
+            <label htmlFor="img_url">image url:</label>
+            <input type="text" name="img_url" id="img_url" />
         </div>
 
         <div className="formgroup">

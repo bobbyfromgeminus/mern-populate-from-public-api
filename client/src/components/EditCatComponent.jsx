@@ -30,10 +30,8 @@ const EditCatComponent = (props) => {
 
                 <div className="flexbox center">
                     <article>
-                        <div className="formgroup">
-                            <label htmlFor="_id">_id:</label>
-                            <input type="text" name="_id" id="_id" defaultValue={props.selectedCat._id}/>
-                        </div>
+
+                        <input type="hidden" name="_id" id="_id" defaultValue={props.selectedCat._id}/>
 
                         <div className="formgroup">
                             <label htmlFor="name">name:</label>

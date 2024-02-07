@@ -378,7 +378,7 @@ h5 {
 
 .cat-datasheet .breeder-data h2 {
   font-weight: 600;
-  margin-bottom: 1rem;
+  margin-bottom: .5rem;
 }
 
 .cat-datasheet .breeder-data table {
@@ -387,12 +387,26 @@ h5 {
 }
 
 .cat-datasheet .breeder-data tr td {
-  padding: .5rem 0;
+  padding: .05rem 0;
   background: none !important;
 }
 
 .cat-datasheet .breeder-data p {
   font-size: .9rem;
+}
+
+
+.breeder-card {
+  padding: 1rem 2rem;
+  width: 100%;
+  background-color: rgba(0, 0,0, .05);
+  margin-bottom: 1rem;
+  transition: all .15s ease-in-out;
+}
+
+.breeder-card:hover {
+  background-color: rebeccapurple;
+  transform: scale(1.05);
 }
 
 

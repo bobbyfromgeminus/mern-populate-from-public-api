@@ -36,7 +36,7 @@ const CatDataComponent = ( { selectedCat, breeders } ) => {
             
             <div className="breeder-data">
                 {breeders.map((breeder, index) => (
-                    <div key={index}>
+                    <div className="breeder-card" key={index}>
                         <h2>{breeder.name}</h2>
                         <table>
                             <tbody>
@@ -50,11 +50,11 @@ const CatDataComponent = ( { selectedCat, breeders } ) => {
                                 </tr>
                                 <tr>
                                     <td>email:</td>
-                                    <td>{breeder.email}</td>
+                                    <td><a href={`mailto: ${breeder.email}`}>{breeder.email}</a></td>
                                 </tr>
                                 <tr>
                                     <td>web:</td>
-                                    <td>{breeder.web}</td>
+                                    <td><a href={breeder.web} target="_blank" rel="noreferrer">{breeder.web}</a></td>
                                 </tr>
                             </tbody>
                         </table>

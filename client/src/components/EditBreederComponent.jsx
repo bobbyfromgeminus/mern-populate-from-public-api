@@ -1,11 +1,9 @@
 import React from "react";
 import {  Link  } from "react-router-dom";
-import { useState } from "react";
 
 const EditBreederComponent = (props) => {
 
-    const [breedID, setBreedID] = useState(props.selectedBreeder.breed_id);
-
+    console.log(props.selectedBreeder.breed_id);
     const getValue = (id) => {
         return (document.getElementById(id).value);
     }
@@ -63,9 +61,9 @@ const EditBreederComponent = (props) => {
 
                         <div className="formgroup">
                             <label htmlFor="breed_id">breeds:</label>
-                            <select name="breed_id" id="breed_id" value={breedID} defaultValue={breedID}>
+                            <select name="breed_id" id="breed_id">
                                 {props.cats.map((cat, index) => (
-                                    <option key={index} value={cat._id} onChange={(e) => setBreedID(e.target.value)}>{cat.name}</option>
+                                    <option key={index} value={cat._id} selected={cat._id === props.selectedBreeder.breed_id}>{cat.name}</option>
                                 ))}
                             </select>
                         </div>

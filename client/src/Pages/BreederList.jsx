@@ -10,7 +10,7 @@ const BreederList = () => {
 
   const deleteBreeder = async (id) => {
     try {
-      const response = await fetch(`http://localhost:8080/api/breeder/${id}`, {
+      const response = await fetch(`http://localhost:8080/api/breeders/${id}`, {
         method: "DELETE",
       });
       const result = await response.json();

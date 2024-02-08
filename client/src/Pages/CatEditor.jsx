@@ -23,7 +23,7 @@ const CatEditor = () => {
 
       const result = await response.json();
       if (result) {
-        navigate('/');
+        navigate('/catlist');
       }
     } catch (error) {
       console.error("Error:", error.message);

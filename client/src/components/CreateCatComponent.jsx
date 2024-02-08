@@ -1,5 +1,4 @@
 import React from "react";
-import {  Link  } from "react-router-dom";
 
 const CreateCatComponent = (props) => {
 
@@ -70,7 +69,7 @@ const CreateCatComponent = (props) => {
                             <input type="number" min={0} max={1} name="hypoallergenic" id="hypoallergenic" defaultValue={0} />
                         </div>
 
-                        <Link className="button" to="/" onClick={createNewCat}>Create</Link>
+                        <button type="button" className="button" onClick={createNewCat}>Create</button>
                     </article>
                 </div>
             </div>

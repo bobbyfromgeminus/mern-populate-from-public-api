@@ -1,5 +1,4 @@
 import React from "react";
-import {  Link  } from "react-router-dom";
 
 const CreateBreederComponent = (props) => {
 
@@ -69,7 +68,7 @@ const CreateBreederComponent = (props) => {
                             </select>
                         </div>
 
-                        <Link className="button" to="/breederlist" onClick={createNewBreeder}>Create</Link>
+                        <button type="button" className="button" onClick={createNewBreeder}>Create</button>
                     </article>
                 </div>
             </div>

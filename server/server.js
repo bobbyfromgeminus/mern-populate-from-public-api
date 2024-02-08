@@ -202,7 +202,7 @@ const main = async () => {
   await mongoose.connect(MONGO_URL);
 
   app.listen(PORT, () => {
-    console.log("App is listening on 8080");
+    console.log("App is listening on "+PORT);
     console.log("Try /api/cats route right now");
   });
 };

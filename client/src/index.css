@@ -331,6 +331,7 @@ h5 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr;
+  overflow: hidden;
 }
 
 .cat-datasheet .image {
@@ -374,6 +375,7 @@ h5 {
   background-color: #262626;
   color: white;
   padding: 1rem 3rem;
+  overflow-y: auto;
 }
 
 .cat-datasheet .breeder-data h2 {

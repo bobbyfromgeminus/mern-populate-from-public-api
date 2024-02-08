@@ -33,6 +33,10 @@ const BreederCardsComponent = (props) => {
                         <table>
                             <tbody>
                                 <tr>
+                                    <td>country:</td>
+                                    <td><b>{breeder.country}</b></td>
+                                </tr>
+                                <tr>
                                     <td>address:</td>
                                     <td>{breeder.address}</td>
                                 </tr>

@@ -7,6 +7,17 @@ const BreederTableComponent = (props) => {
         props.setSearchString(e.target.value);
     }
 
+    const changeTarget = (target) => {
+        props.setFilterTarget(target);
+        if (target === 'name') {
+            document.getElementById(`filtername`).classList.add('active');
+            document.getElementById(`filtercountry`).classList.remove('active');
+        } else {
+            document.getElementById(`filtercountry`).classList.add('active');
+            document.getElementById(`filtername`).classList.remove('active');
+        }
+    }
+
     return (
         <section>
             <main>
@@ -14,17 +25,18 @@ const BreederTableComponent = (props) => {
             <table>
                 <thead>
                     <tr>
-                        <th colSpan="6">
+                        <th colSpan="7">
                             <div className="filtergroup">
                                 <label htmlFor="filter">filter breeders</label>
-                                <button className="filterbutton" type="button" onClick={ ()=>props.setFilterTarget('name') }>by Name</button>
-                                <button className="filterbutton" type="button" onClick={ ()=>props.setFilterTarget('country') }>by Country</button>
+                                <button id="filtername" className="filterbutton active" type="button" onClick={ ()=>changeTarget('name') }>by Name</button>
+                                <button id="filtercountry" className="filterbutton" type="button" onClick={ ()=>changeTarget('country') }>by Country</button>
                                 <input placeholder="type something" className="filter" type="text" name="filter" onChange={filterHandler} />
                             </div>
                         </th>
                     </tr>
                     <tr>
                         <th>name</th>
+                        <th>country</th>
                         <th>address</th>
                         <th>phone</th>
                         <th>email</th>
@@ -36,6 +48,7 @@ const BreederTableComponent = (props) => {
                     {props.breeders.map((breeder, index) => (
                         <tr key={index} id={breeder._id}>
                             <td>{breeder.name}</td>
+                            <td>{breeder.country}</td>
                             <td>{breeder.address}</td>
                             <td>{breeder.phone}</td>
                             <td>{breeder.email}</td>

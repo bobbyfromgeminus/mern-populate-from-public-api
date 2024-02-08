@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 
 const BreederSchema = new mongoose.Schema({
     name: String,
+    country: String,
     address: String,
     phone: String,
     email: String,

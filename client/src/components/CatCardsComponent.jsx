@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 
-const AllCatsComponent = (props) => {
+const CatCardsComponent = (props) => {
 
     const filterHandler = (e) => {
         props.setSearchString(e.target.value);
@@ -45,4 +45,4 @@ const AllCatsComponent = (props) => {
     );
 };
 
-export default AllCatsComponent;
+export default CatCardsComponent;

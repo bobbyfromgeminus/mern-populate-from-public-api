@@ -12,6 +12,7 @@ const EditBreederComponent = (props) => {
         const updatedBreeder = {
             _id: getValue('_id'),
             name: getValue('name'),
+            country: getValue('country'),
             address: getValue('address'),
             phone: getValue('phone'),
             email: getValue('email'),
@@ -35,6 +36,11 @@ const EditBreederComponent = (props) => {
                         <div className="formgroup">
                             <label htmlFor="name">name:</label>
                             <input type="text" name="name" id="name" defaultValue={props.selectedBreeder.name}/>
+                        </div>
+
+                        <div className="formgroup">
+                            <label htmlFor="country">country:</label>
+                            <input type="text" name="country" id="country" defaultValue={props.selectedBreeder.country}/>
                         </div>
 
                         <div className="formgroup">

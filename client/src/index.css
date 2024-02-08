@@ -398,11 +398,27 @@ h5 {
 
 .breeder-card {
   padding: 1rem 2rem;
-  width: 100%;
   background-color: rgba(0, 0,0, .05);
   margin-bottom: 1rem;
   transition: all .15s ease-in-out;
+  color: white;
+  font-size: .9rem;
 }
+
+.breeder-card h2 {
+  font-size: 1.1rem;
+}
+
+.breeder-card table {
+  width: 100% !important;
+}
+
+.breeder-card table tr td {
+  padding: .15rem .3rem;
+}
+
+.w-100 { width: 100%; }
+.w-400px { width: 400px; }
 
 .breeder-card:hover {
   background-color: rebeccapurple;

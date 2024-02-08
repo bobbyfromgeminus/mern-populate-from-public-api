@@ -36,7 +36,7 @@ const CatDataComponent = ( { selectedCat, breeders } ) => {
             
             <div className="breeder-data">
                 {breeders.map((breeder, index) => (
-                    <div className="breeder-card" key={index}>
+                    <div className="breeder-card w-100" key={index}>
                         <h2>{breeder.name}</h2>
                         <table>
                             <tbody>

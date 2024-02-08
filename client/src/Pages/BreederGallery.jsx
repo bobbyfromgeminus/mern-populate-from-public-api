@@ -1,24 +1,11 @@
 import { useState, useEffect } from "react";
-import BreederTableComponent from "../components/BreederTableComponent";
+import BreederCardsComponent from "../components/BreederCardsComponent";
 
-const BreederList = () => {
+const BreederGallery = () => {
 
   const [breeders, setBreeders] = useState([]);
   const [searchString, setSearchString] = useState('');
   const [filterTarget, setFilterTarget] = useState('name');
-  const [fetchTrigger, setFetchTrigger] = useState(0);
-
-  const deleteBreeder = async (id) => {
-    try {
-      const response = await fetch(`http://localhost:8080/api/breeders/${id}`, {
-        method: "DELETE",
-      });
-      const result = await response.json();
-      if (result) setFetchTrigger(fetchTrigger + 1);
-    } catch (error) {
-      console.error("Error:", error.message);
-    }
-  };
 
   useEffect(() => {
     const getBreeders = async () => {
@@ -36,14 +23,14 @@ const BreederList = () => {
       }
     };
     getBreeders();
-  }, [filterTarget, searchString, fetchTrigger]);
+  }, [filterTarget, searchString]);
 
   return (
-    <BreederTableComponent deleteBreeder={deleteBreeder} 
-                      setFilterTarget={setFilterTarget}
-                      setSearchString={setSearchString}
-                      breeders={breeders} />
+    <BreederCardsComponent  setFilterTarget={setFilterTarget}
+                            setSearchString={setSearchString}
+                            breeders={breeders} />
+
   );
 };
 
-export default BreederList;
+export default BreederGallery;

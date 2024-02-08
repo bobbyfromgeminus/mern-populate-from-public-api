@@ -11,7 +11,7 @@ import CatDatasheet from "./Pages/CatDatasheet";
 import CatList from "./Pages/CatList";
 import CatCreator from "./Pages/CatCreator";
 import CatEditor from "./Pages/CatEditor";
-import Breeders from "./Pages/Breeders";
+import BreederGallery from "./Pages/BreederGallery";
 import BreederList from './Pages/BreederList';
 import BreederCreator from './Pages/BreederCreator';
 import BreederEditor from './Pages/BreederEditor';
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/breeders",
-        element: <Breeders />,
+        element: <BreederGallery />,
       },
       {
         path: "/breederlist",

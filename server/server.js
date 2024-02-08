@@ -22,23 +22,27 @@ app.use(cors());
 
 // - CATS
 
+  // Get All
   app.get("/api/cats/", async (req, res) => {
     const cats = await CatModel.find().sort({ created: "desc" });
     const prettyJson = JSON.stringify(cats, null, 2);
     res.type('json').send(prettyJson);
   });
 
+  // Get All from Egypt
   app.get("/api/cats/egypt", async (req, res) => {
     const cats = await CatModel.find({ origin: 'Egypt' }).sort({ created: "desc" });
     const prettyJson = JSON.stringify(cats, null, 2);
     res.type('json').send(prettyJson);
   });
 
+  // Get One by ID
   app.get("/api/cats/:id", async (req, res) => {
     const cat = await CatModel.findById(req.params.id);
     return res.json(cat);
   });
 
+  // Get All - filtered name
   app.get('/api/cats/findbyname/:searchString', async (req, res) => {
     const { searchString } = req.params;
     try {
@@ -51,6 +55,7 @@ app.use(cors());
     }
   });
 
+  // Get All - filtered description
   app.get('/api/cats/findbydesc/:searchString', async (req, res) => {
     const { searchString } = req.params;
     try {
@@ -63,6 +68,7 @@ app.use(cors());
     }
   });
 
+  // Create
   app.post("/api/cats/", async (req, res, next) => {
     const cat = req.body;
 
@@ -74,6 +80,7 @@ app.use(cors());
     }
   });
 
+  // Update
   app.patch("/api/cats/:id", async (req, res, next) => {
     try {
       const cat = await CatModel.findOneAndUpdate(
@@ -87,6 +94,7 @@ app.use(cors());
     }
   });
 
+  // Delete
   app.delete("/api/cats/:id", async (req, res, next) => {
     try {
       const cat = await CatModel.findById(req.params.id);
@@ -100,17 +108,20 @@ app.use(cors());
 
 // - BREEDERS
 
+  // Get All
   app.get("/api/breeders/", async (req, res) => {
     const breeders = await BreederModel.find().sort({ created: "desc" });
     const prettyJson = JSON.stringify(breeders, null, 2);
     res.type('json').send(prettyJson);
   });
 
+  // Get One by ID
   app.get("/api/breeders/:id", async (req, res) => {
     const breeder = await BreederModel.findById(req.params.id);
     return res.json(breeder);
   });
 
+  // Get One by Breed ID
   const ObjectId = mongoose.Types.ObjectId;
   app.get("/api/breeders/breedid/:id", async (req, res) => {
     const breedId = ObjectId(req.params.id);
@@ -119,6 +130,33 @@ app.use(cors());
     res.type('json').send(prettyJson);
   });
 
+  // Get All - filtered name
+  app.get('/api/breeders/findbyname/:searchString', async (req, res) => {
+    const { searchString } = req.params;
+    try {
+      const matchingBreeders = await BreederModel.find({ name: { $regex: searchString, $options: 'i' } }).sort({ created: 'desc' });
+      const prettyJson = JSON.stringify(matchingBreeders, null, 2);
+      res.type('json').send(prettyJson);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Hiba történt a lekérdezés során.' });
+    }
+  });
+
+   // Get All - filtered country
+   app.get('/api/breeders/findbycountry/:searchString', async (req, res) => {
+    const { searchString } = req.params;
+    try {
+      const matchingBreeders = await BreederModel.find({ country: { $regex: searchString, $options: 'i' } }).sort({ created: 'desc' });
+      const prettyJson = JSON.stringify(matchingBreeders, null, 2);
+      res.type('json').send(prettyJson);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Hiba történt a lekérdezés során.' });
+    }
+  });
+
+  // Create
   app.post("/api/breeders/", async (req, res, next) => {
     const breeder = req.body;
 
@@ -130,6 +168,7 @@ app.use(cors());
     }
   });
 
+  // Update
   app.patch("/api/breeders/:id", async (req, res, next) => {
     try {
       const breeder = await BreederModel.findOneAndUpdate(
@@ -143,6 +182,7 @@ app.use(cors());
     }
   });
 
+  // Delete
   app.delete("/api/breeders/:id", async (req, res, next) => {
     try {
       const breeder = await BreederModel.findById(req.params.id);
